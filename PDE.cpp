@@ -182,8 +182,119 @@ float calcular_difusion(float T[n][n], int i, int j, int tipoFrontera, float con
 
 
 
-int main()
+int main(int argc, char const *argv[])
 {
+	// constantes fisicas
+	float k=1.62, Cp=820, p=2.71*1e3, v=k/(p*Cp);
+
+	float tiempo=0.2*pow((float)(0.5/n),2)/v;
+	float constante=v*tiempo/pow((float)(0.5/n),2);
+	int pasos_de_tiempo;
+
+	// crear arreglo de temperaturas
+	float TC[n][n];
+	float proximaTC[n][n];
+
+
+	ofstream mi_archivo;
+
+
 	
+
+	// inicializar temperaturas en cero
+	for (int i = 0; i < n; ++i)
+	{
+		for (int j = 0; j < n; ++j)
+		{
+			TC[i][j] = 0.0;
+			proximaTC[i][j] = 0.0;
+		}
+	}
+
+
+
+	//int tipoFrontera=1;
+	// for tipofrontera entre 0 y 2:
+
+	for (int tipoFrontera = 0; tipoFrontera < 3; ++tipoFrontera)
+	{ //***********************************************************
+		//***********************************************************
+		//***********************************************************
+
+		if (tipoFrontera==0) // fronteras fijas -> asignar temperatura de los bordes
+		{
+			for (int i = 0; i < n; ++i)
+			{
+				TC[0][i] = 10.0;
+				TC[ultimo][i] = 10.0;
+				TC[i][0] = 10.0;
+				TC[i][ultimo] = 10.0;
+			}
+		}
+
+		// distribucion de temperatrua que me invento para probar las condiciones de frontera
+//		for (int i = 0; i < 20; ++i)
+//		{
+//			for (int j = 0; j < 10; ++j)
+//			{
+//				TC[i][j] = 300;
+//			}
+//		}
+
+
+		/// +++++++++++++++++++++++++++++++++++++++++++++++++++++
+		/// recorrido principal
+		pasos_de_tiempo = 100;
+		for (int i_tiempo = 0; i_tiempo < pasos_de_tiempo; ++i_tiempo)
+		{
+			for (int i = 0; i < n; ++i)
+			{
+				for (int j = 0; j < n; ++j)
+				{
+					proximaTC[i][j] = calcular_difusion(TC, i, j, tipoFrontera, constante);
+				}
+			}
+
+			cambiar_referencia_tiempo(TC, proximaTC);
+		}
+
+
+		if (tipoFrontera==0)
+		{
+			mi_archivo.open("0.txt");
+		}else if (tipoFrontera==1)
+		{
+			mi_archivo.open("1.txt");
+		}else
+		{
+			mi_archivo.open("2.txt");
+		}
+
+
+
+
+
+		for (int i = 0; i < n; ++i)
+		{
+			for (int j = 0; j < n; ++j)
+			{
+				mi_archivo << proximaTC[i][j] << " ";
+			}
+			mi_archivo << endl; 
+		}
+		mi_archivo.close();
+
+	//***********************************************************
+	//***********************************************************
+	} //***********************************************************
+
+
+	
+
+
+	
+
+
+	/* code */
 	return 0;
 }
