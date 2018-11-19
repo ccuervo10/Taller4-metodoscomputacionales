@@ -20,6 +20,7 @@ float derivada_velocidad_y(float vx, float vy, float c, float m)
 	return gravedadx + friccion*vy;
 }
 
+
 void lanzamiento_sencillo()
 {
 	int i;
@@ -73,6 +74,7 @@ void lanzamiento_sencillo()
 		proyectil_v << VV[i][0] << " " << VV[i][1] << endl;
 	}	
 }
+
 
 int lanzamientos_multiples(float vxInicial[7], float vyInicial[7], int NA)
 {
@@ -167,7 +169,8 @@ int lanzamientos_multiples(float vxInicial[7], float vyInicial[7], int NA)
 	return indice_mayor_recorrido;
 }
 
-
+int main()
+{
 	// llamar funcion de lanzacmiento a 45 grados
 	lanzamiento_sencillo();
 
