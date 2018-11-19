@@ -177,6 +177,8 @@ float calcular_difusion(float T[n][n], int i, int j, int tipoFrontera, float con
 
 	}
 
+
+
 	return T1;
 }
 
@@ -242,6 +244,17 @@ int main(int argc, char const *argv[])
 //		}
 
 
+		if (tipoFrontera==0)
+		{
+			mi_archivo.open("0.txt");
+		}else if (tipoFrontera==1)
+		{
+			mi_archivo.open("1.txt");
+		}else
+		{
+			mi_archivo.open("2.txt");
+		}
+
 		/// +++++++++++++++++++++++++++++++++++++++++++++++++++++
 		/// recorrido principal
 		pasos_de_tiempo = 100;
@@ -256,32 +269,21 @@ int main(int argc, char const *argv[])
 			}
 
 			cambiar_referencia_tiempo(TC, proximaTC);
-		}
 
 
-		if (tipoFrontera==0)
-		{
-			mi_archivo.open("0.txt");
-		}else if (tipoFrontera==1)
-		{
-			mi_archivo.open("1.txt");
-		}else
-		{
-			mi_archivo.open("2.txt");
-		}
-
-
-
-
-
-		for (int i = 0; i < n; ++i)
-		{
-			for (int j = 0; j < n; ++j)
+			for (int i = 0; i < n; ++i)
 			{
-				mi_archivo << proximaTC[i][j] << " ";
+				for (int j = 0; j < n; ++j)
+				{
+					mi_archivo << proximaTC[i][j] << " ";
+				}
+				mi_archivo << endl; 
 			}
-			mi_archivo << endl; 
+		
 		}
+
+
+		
 		mi_archivo.close();
 
 	//***********************************************************
@@ -291,8 +293,6 @@ int main(int argc, char const *argv[])
 
 	
 
-
-	
 
 
 	/* code */
